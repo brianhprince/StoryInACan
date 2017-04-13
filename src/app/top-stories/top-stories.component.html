@@ -4,7 +4,7 @@
   </div>
   <div class="panel-body">
     <ul class="topStories">
-      <li *ngFor="let story of topStories">{{story.title}} <span class="badge">{{story.storyTeller}}</span></li>
+      <li *ngFor="let story of topStories"><a [routerLink]="['/storydetails', story.id]">{{story.title}}</a> <span class="badge">{{story.storyTeller}}</span></li>
     </ul>
   </div>
 </div>

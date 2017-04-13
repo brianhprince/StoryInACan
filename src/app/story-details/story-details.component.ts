@@ -23,7 +23,13 @@ export class StoryDetailsComponent implements OnInit {
 
   ngOnInit():void {
     this.route.params.switchMap((params: Params)=>
-      this.storyService.getStory(+params['id'])).subscribe(story => this.theStory=story);
+      this.storyService.getStory(+params['id'])).subscribe(s => this.theStory=s);
+
+      console.log('story is ', this.theStory);
   }
+
+  goBack(): void {
+  this.location.back();
+}
 
 }

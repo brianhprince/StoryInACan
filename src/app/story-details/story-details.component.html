@@ -1,5 +1,16 @@
 <div class="row">
+  <div class="col-md-2">
+    <button (click)="goBack()">Back</button>
+  </div>
+  <div *ngIf="theStory" class="col-md-4">
+    <h2>{{theStory.title}}</h2>
+  </div>
+</div>
+<div class="row">
+  <div *ngIf="theStory" class="col-md-4">
+    Storyteller : {{theStory.storyTeller}}
+  </div>
   <div class="col-md-8">
-      {{theStory.title}} <span class="badge">{{theStory.storyTeller}}</span>
+    Video Player goes here {{theStory.videoURL}}
   </div>
 </div>
