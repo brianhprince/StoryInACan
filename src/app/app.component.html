@@ -1,3 +1,15 @@
-<h1>
-  {{title}}
-</h1>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <a role="button" routerLink="/dashboard" class="btn btn-lg btn-primary">Dashboard2</a>
+    <a role="button" routerLink="/sharestory" class="btn btn-lg btn-primary">Share your Story</a>
+    <a role="button" routerLink="/findstory" class="btn btn-lg btn-success">Find a Story</a>
+  </div>
+</nav>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+  <div class="container">
+    Privacy - Terms of Use - Other Things Like That
+  </div>
+</nav>
