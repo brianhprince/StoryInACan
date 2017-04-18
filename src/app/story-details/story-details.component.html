@@ -8,9 +8,16 @@
 </div>
 <div class="row">
   <div *ngIf="theStory" class="col-md-4">
-    Storyteller : {{theStory.storyTeller}}
+    <h2>Storyteller : {{theStory.storyTeller}}</h2>
+    <h3>Tags : </h3>
+
+
   </div>
   <div class="col-md-8">
-    Video Player goes here {{theStory.videoURL}}
+    <video id="vid1" class="azuremediaplayer amp-default-skin" autoplay controls width="640" height="400">
+      <p class="amp-no-js">
+        To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
+      </p>
+    </video>
   </div>
 </div>

@@ -12,7 +12,7 @@ export class StoryService {
     return Promise.resolve(Stories);
   } 
 
-getAllStories() : Promise<Story[]> {
+  getAllStories() : Promise<Story[]> {
     return Promise.resolve(Stories);
   } 
 

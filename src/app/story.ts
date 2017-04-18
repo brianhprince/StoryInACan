@@ -3,4 +3,5 @@ export class Story {
   title: string;
   storyTeller: string;
   videoURL: string;
+  tags: string[];
 }
