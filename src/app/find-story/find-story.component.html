@@ -1,3 +1,15 @@
-<p>
-  find-story works!
-</p>
+<div class="row">
+  <div class="panel panel-primary col-md-8">
+    <div class="panel-heading">
+      <h3 class="panel-title">All Stories</h3>
+    </div>
+    <div class="panel-body">
+      <ul class="topStories">
+        <li *ngFor="let story of allStories"><a [routerLink]="['/storydetails', story.id]">{{story.title}}</a> <span class="badge">{{story.storyTeller}}</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="panel panel-primary col-md-4">
+    <app-tag-cloud>Loading tag cloud...</app-tag-cloud>
+    </div>
+</div>

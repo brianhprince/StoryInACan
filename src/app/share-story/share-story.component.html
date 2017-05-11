@@ -1,3 +1,39 @@
-<p>
-  share-story works!
-</p>
+<div class="container">
+  <div [hidden]="submitted">
+    <h1>Share Your Story!</h1>
+    <form #storyForm="ngForm" (ngSubmit)="onSubmit()">
+      
+      <div class="form-group">
+        <label for="name">Title of your story:</label>
+
+        <input type="text" id="title" class="form-control" required minlength="4" maxlength="24" name="title" [(ngModel)]="newStory.title">
+
+        <div *ngIf="formErrors.title" class="alert alert-danger">
+          {{ formErrors.title }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="storyTeller">Who is the storyteller?</label>
+
+        <input type="text" id="storyTeller" class="form-control" required minlength="4" maxlength="24" name="storyTeller" [(ngModel)]="newStory.storyTeller">
+
+        <div *ngIf="formErrors.storyTeller" class="alert alert-danger">
+          {{ formErrors.storyTeller }}
+        </div>
+      </div>
+
+<div class="form-group">
+        <label for="tags">Please add any relevant tags. Example: Azure, IaaS, ISV</label>
+
+        <input type="text" id="tags" class="form-control" name="tags"  maxlength="24" [(ngModel)]="newStory.tags">
+
+        <div *ngIf="formErrors.tags" class="alert alert-danger">
+          {{ formErrors.tags }}
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-default" [disabled]="!storyForm.form.valid">Submit</button>
+    </form>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Story } from '../story';
-import { StoryService } from '../story.service';
+import { Story } from '../models/story';
+import { StoryService } from '../story-service/story.service';
 
 @Component({
   selector: 'top-stories',

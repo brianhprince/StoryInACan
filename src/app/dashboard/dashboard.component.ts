@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Story } from '../story';
+import { Story } from '../models/story';
 
 @Component({
   selector: 'app-dashboard',

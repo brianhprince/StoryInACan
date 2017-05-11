@@ -5,12 +5,13 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from "@angular/router";
 
 import { AppComponent } from './app.component';
-import { StoryService } from './story.service';
+import { StoryService } from './story-service/story.service';
 import { TopStoriesComponent } from './top-stories/top-stories.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FindStoryComponent } from './find-story/find-story.component';
 import { ShareStoryComponent } from './share-story/share-story.component';
 import { StoryDetailsComponent } from './story-details/story-details.component';
+import { TagCloudComponent } from './tag-cloud/tag-cloud.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { StoryDetailsComponent } from './story-details/story-details.component';
     DashboardComponent,
     FindStoryComponent,
     ShareStoryComponent,
-    StoryDetailsComponent
+    StoryDetailsComponent,
+    TagCloudComponent
   ],
   imports: [
     BrowserModule,

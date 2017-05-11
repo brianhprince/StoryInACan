@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
-import { Story } from '../story';
-import { StoryService } from '../story.service';
+import { Story } from '../models/story';
+import { StoryService } from '../story-service/story.service';
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/switchmap';
 /// <reference path="..\..\assets\AzureMediaPlayer\azuremediaplayer.d.ts" />
