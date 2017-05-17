@@ -5,4 +5,8 @@ export class Story {
   storyTeller: string;
   videoURL?: string;
   tags?: string[];
+
+constructor() {
+}
+
 }

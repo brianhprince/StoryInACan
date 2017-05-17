@@ -6,7 +6,7 @@
       <div class="form-group">
         <label for="name">Title of your story:</label>
 
-        <input type="text" id="title" class="form-control" required minlength="4" maxlength="24" name="title" [(ngModel)]="newStory.title">
+        <input type="text" id="title" class="form-control" required minlength="4" maxlength="50" name="title" [(ngModel)]="newStory.title">
 
         <div *ngIf="formErrors.title" class="alert alert-danger">
           {{ formErrors.title }}
@@ -16,7 +16,7 @@
       <div class="form-group">
         <label for="storyTeller">Who is the storyteller?</label>
 
-        <input type="text" id="storyTeller" class="form-control" required minlength="4" maxlength="24" name="storyTeller" [(ngModel)]="newStory.storyTeller">
+        <input type="text" id="storyTeller" class="form-control" required minlength="4" maxlength="50" name="storyTeller" [(ngModel)]="newStory.storyTeller">
 
         <div *ngIf="formErrors.storyTeller" class="alert alert-danger">
           {{ formErrors.storyTeller }}
@@ -26,7 +26,7 @@
 <div class="form-group">
         <label for="tags">Please add any relevant tags. Example: Azure, IaaS, ISV</label>
 
-        <input type="text" id="tags" class="form-control" name="tags"  maxlength="24" [(ngModel)]="newStory.tags">
+        <input type="text" id="tags" class="form-control" name="tags"  maxlength="50" [(ngModel)]="taglist">
 
         <div *ngIf="formErrors.tags" class="alert alert-danger">
           {{ formErrors.tags }}

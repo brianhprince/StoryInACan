@@ -1,6 +1,8 @@
 import { Component, AfterViewChecked, ViewChild } from '@angular/core';
 import { Story } from '../models/story';
+import { StoryService } from '../story-service/story.service';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-share-story',
@@ -9,15 +11,26 @@ import { NgForm } from '@angular/forms';
 })
 export class ShareStoryComponent implements AfterViewChecked {
 
+  taglist = "";
   submitted = false;
   newStory: Story = new Story;
   storyForm: NgForm;
   @ViewChild('storyForm') currentForm: NgForm;
 
-  constructor() { }
+  constructor(private router: Router, private storyService: StoryService) { }
 
   onSubmit() {
     this.submitted = true;
+    this.newStory.id = '';
+    this.newStory.isTop = false;
+    this.newStory.tags = this.taglist.split(',');
+
+    this.storyService.postNewStory(this.newStory)
+      .then(s => {
+        console.log(s); 
+        this.router.navigate(['./storydetails/'+s.id]);
+      });
+    
   }
 
   ngAfterViewChecked() {
@@ -61,15 +74,15 @@ export class ShareStoryComponent implements AfterViewChecked {
     'title': {
       'required':      'You must give your story a title.',
       'minlength':     'The title must have 4 or more characters.',
-      'maxlength':     'While we run in the cloud, we don`t have enough space to have a title longer than 24 characters. Please shorten it.',
+      'maxlength':     'While we run in the cloud, we don`t have enough space to have a title longer than 50 characters. Please shorten it.',
     },
     'storyTeller': {
       'required':      'The story teller`s name is required.',
       'minlength':     'The story teller`s name must be at least 4 characters long.',
-      'maxlength':     'The story teller`s name cannot be more than 24 characters long.',
+      'maxlength':     'The story teller`s name cannot be more than 50 characters long.',
     },
     'tags': {
-      'maxlength':     'Please enter fewer tags. You can have up to 24 characters.',
+      'maxlength':     'Please enter fewer tags. You can have up to 50 characters.',
     }
   };
 

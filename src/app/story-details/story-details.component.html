@@ -2,16 +2,15 @@
   <div class="col-md-2">
     <button (click)="goBack()">Back</button>
   </div>
-  <div *ngIf="theStory" class="col-md-4">
+</div>
+<div class="row">
+  <div *ngIf="theStory" class="col-md-8">
     <h2>{{theStory.title}}</h2>
+    <h4>{{theStory.storyTeller}}</h4>
+    <span class="badge" *ngFor="let tag of theStory.tags; let i = index;">{{tag}}</span>
   </div>
 </div>
 <div class="row">
-  <div *ngIf="theStory" class="col-md-4">
-    <h2>Storyteller : {{theStory.storyTeller}}</h2>
-    <h4>top: {{theStory.isTop}}</h4>
-    <h3>Tags : </h3><span class="badge" *ngFor="let tag of theStory.tags; let i = index;">{{tag}}</span>
-  </div>
   <div class="col-md-8">
     <video id="vid1" class="azuremediaplayer amp-default-skin" autoplay controls width="640" height="400">
       <p class="amp-no-js">

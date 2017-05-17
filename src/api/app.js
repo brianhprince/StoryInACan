@@ -1,5 +1,11 @@
 var express = require('express');
+var bodyParser = require('body-parser');
+var port = process.env.PORT || 3000;
+
 var app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 // Add headers
 app.use(function (req, res, next) {
@@ -11,22 +17,34 @@ app.use(function (req, res, next) {
 });
 
 var DocumentDBClient = require('documentdb').DocumentClient,
-  config = require('../Shared/config'),
-  fs = require('fs'),
-  async = require('async'),
-  databaseId = config.names.database,
-  collectionId = config.names.collection,
-  dbLink = 'dbs/' + databaseId,
-  collLink = dbLink + '/colls/' + collectionId;
+    config = require('../Shared/config'),
+    fs = require('fs'),
+    async = require('async'),
+    databaseId = config.names.database,
+    collectionId = config.names.collection,
+    dbLink = 'dbs/' + databaseId,
+    collLink = dbLink + '/colls/' + collectionId;
 
 var host = config.connection.endpoint;
 var masterKey = config.connection.authKey;
-var client = new DocumentDBClient( host, { masterKey: masterKey });
+var client = new DocumentDBClient(host, { masterKey: masterKey });
 
+app.post('/story', function (req, res) {
+    console.log("received story post");
+    var aStory = req.body;
+    
+    insertStory(collLink, req.body, function (err, results) {
+        if (err) {
+            handleError(err);
+        } else {
+            res.json(results);
+        }
+    });
+});
 
 app.get('/stories/top', function (req, res) {
     console.log("get top stories called");
-    
+
     var querySpec = {
         query: 'SELECT * FROM Videos v where v.isTop=1'
     };
@@ -50,11 +68,11 @@ app.get('/stories', function (req, res) {
 });
 
 app.get('/story/:id', function (req, res) {
-    var storyId = req.params.id;
-    var docLink = collLink + '/docs/' + storyId;    
-    
+    var storyId = req.params.id;
+    var docLink = collLink + '/docs/' + storyId;
+
     console.log("getting id " + storyId);
-    
+
     readDocument(docLink, function (aStory) {
         res.json(aStory);
     });
@@ -62,7 +80,7 @@ app.get('/story/:id', function (req, res) {
 
 app.get('/tag', function (req, res) {
     console.log("get all tags called");
-    
+
     var querySpec = {
         query: 'SELECT Videos.tags FROM Videos'
     };
@@ -78,35 +96,13 @@ app.get('/tag', function (req, res) {
     });
 });
 
-// TODO: make this an env variable for Azure
-app.listen(3000, function () {
-  console.log('API host running on port 3000');
-})
-
-
-function insertDocuments(collLink, callback) {
-    var createdList = [];
-
-    async.each(
-        documentDefinitions(), 
-
-        function iterator(documentDefinition, cb) {
-            client.createDocument(collLink, documentDefinition, function (err, document) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log('created ' + document.id);
-                    createdList.push(document);
-                    cb();
-                }
-            });
-        },
-
-        function (err) {
-            console.log('iterating done ' + createdList.length);
-            callback(createdList);
+function insertStory(collLink, storyToSave, callback) {
+    client.createDocument(collLink, storyToSave, (err, created) => {
+        if (err) reject(err)
+        else {
+            callback(err, created);
         }
-    );
+    });
 }
 
 function GetAllStories(collLink, callback) {
@@ -152,19 +148,19 @@ function getOrCreateCollection(dbLink, id, callback) {
     client.queryCollections(dbLink, querySpec).toArray(function (err, results) {
         if (err) {
             handleError(err);
-        //collection not found, create it
+            //collection not found, create it
         } else if (results.length === 0) {
             var collDef = { id: id };
 
             client.createCollection(dbLink, collDef, function (err, created) {
                 if (err) {
                     handleError(err);
-                } else {                    
+                } else {
                     callback(created);
                 }
             });
 
-        //collection found, return it
+            //collection found, return it
         } else {
             callback(results[0]);
         }
@@ -185,18 +181,18 @@ function getOrCreateDatabase(id, callback) {
     client.queryDatabases(querySpec).toArray(function (err, results) {
         if (err) {
             handleError(err);
-        //database not found, create it
+            //database not found, create it
         } else if (results.length === 0) {
             var databaseDef = { id: id };
             client.createDatabase(databaseDef, function (err, created) {
                 if (err) {
                     handleError(err);
-                } else {                    
+                } else {
                     callback(created);
                 }
             });
 
-        //database found, return it
+            //database found, return it
         } else {
             callback(results[0]);
         }
@@ -207,3 +203,7 @@ function handleError(error) {
     console.log('\nAn error with code \'' + error.code + '\' has occurred:');
     console.log('\t' + JSON.parse(error.body).message);
 }
+
+app.listen(port, function () {
+    console.log('API host running on port '+port);
+})

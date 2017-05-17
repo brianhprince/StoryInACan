@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { Story } from '../models/story';
 import { StoryService } from '../story-service/story.service';
 import { Observable } from "rxjs/Observable";
-import 'rxjs/add/operator/switchmap';
+import 'rxjs/add/operator/switchMap';
 /// <reference path="..\..\assets\AzureMediaPlayer\azuremediaplayer.d.ts" />
 
 @Component({
@@ -20,42 +20,40 @@ export class StoryDetailsComponent implements OnInit, OnDestroy {
     private storyService: StoryService,
     private route: ActivatedRoute,
     private location: Location
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     var myPlayer = amp('vid1',
-       { /* Options */
-        techOrder: ["azureHtml5JS", "flashSS", "html5FairPlayHLS","silverlightSS", "html5"],
+      { /* Options */
+        techOrder: ["azureHtml5JS", "flashSS", "html5FairPlayHLS", "silverlightSS", "html5"],
         autoplay: true,
         logo: false,
         controls: true
-       }, function() {
-          // console.log('Good to go!');
-          //  // add an event listener
-          // this.addEventListener('ended', function() {
-          //   console.log('Finished!'); }
-          }
-      );
+      }, function () {
+      }
+    );
 
-    this.route.params.switchMap(
-        (params: Params) => this.storyService.getStory(+params['id']))
-        .subscribe(s =>
-        { 
-          this.theStory = s;
-
-          myPlayer.src({ 
-            src: this.theStory.videoURL, 
+    this.route.params
+      .switchMap((params: Params) => this.storyService.getStory(params['id']))
+      .subscribe(aStory => {
+        this.theStory = aStory;
+        
+        if (this.theStory.videoURL) {
+          myPlayer.src({
+            src: this.theStory.videoURL,
             type: "application/vnd.ms-sstr+xml"
           });
-        });
+        }
+        else console.log("no videourl");
+      });
   }
 
   goBack(): void {
-   
     this.location.back();
   }
 
-  ngOnDestroy():void{
-      amp("vid1").dispose();
+  ngOnDestroy(): void {
+    amp("vid1").dispose();
   }
 }

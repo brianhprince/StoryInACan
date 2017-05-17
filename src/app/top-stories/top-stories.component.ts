@@ -13,16 +13,10 @@ export class TopStoriesComponent implements OnInit {
 
   topStories: Story[];
 
-  constructor(private storyService:StoryService) {
-   }
-
-  getTopStories(): void{
-    this.storyService.getTopStories().then(stories => this.topStories = stories );
+  constructor(private storyService: StoryService) {
   }
 
   ngOnInit() {
-    this.getTopStories();
+    this.storyService.getTopStories().then(stories => this.topStories = stories);
   }
-
-
 }
